@@ -1,0 +1,3 @@
+[submodule "chapter6"]
+	path = chapter6
+	url = ./chapter06/ejected-app
