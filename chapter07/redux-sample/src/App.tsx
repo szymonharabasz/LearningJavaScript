@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { useDispatch } from 'react-redux';
 import { USER_TYPE } from './store/UserReducer';
 import UserDisplay from "./UserDisplay"
+import { POST_TYPE } from './store/PostReducer';
+import PostDisplay from './PostDisplay';
 
 function App() {
   const [userId, setUserId] = useState(0);
   const dispatch = useDispatch();
-  const onChangeuserId = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [postId, setPostId] = useState(0);
+  const onChangeUserId = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const userIdFromInput = e.target.value ? Number(e.target.value) : 0;
     console.log("userId", userIdFromInput);
     setUserId(userIdFromInput);
@@ -30,13 +32,41 @@ function App() {
     }
   }
 
+  const onChangePostId = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const postIdFromInput = e.target.value ? Number(e.target.value) : 0;
+    setPostId(postIdFromInput);
+
+    const psotResponse = await fetch("https://jsonplaceholder.typicode.com/posts/" + postIdFromInput);
+    const post = await psotResponse.json();
+    console.log("post", post);
+    dispatch({
+      type: POST_TYPE,
+      payload: {
+        id: post.id,
+        title: post.title,
+        body: post.body
+      }
+    });
+  }
+
   return (
     <React.Fragment>
-    <div className="App">
-      <label>Identyfikator uytkownika</label>
-      <input value={userId} onChange={onChangeuserId} />
-    </div>
-    <UserDisplay />
+      <div style={{width: "300px"}}>
+        <div className="App">
+          <label>Identyfikator uytkownika</label>
+          <input value={userId} onChange={onChangeUserId} />
+        </div>
+        <UserDisplay />
+      </div>
+      <br/>
+      <div style={{width: "300px"}}>
+        <div className="App">
+          <label>Identyfikator wpisu</label>
+          <input value={postId} onChange={onChangePostId} />
+        </div>
+        <PostDisplay />
+      </div>
+      
     </React.Fragment>
   );
 }
