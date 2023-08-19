@@ -7,13 +7,13 @@ import { POST_TYPE } from "./store/PostReducer";
 import PostDisplay from "./PostDisplay";
 
 function App() {
-  const [userId, setUserId] = useState(0);
+  const [userId, setUserId] = useState("0");
   const dispatch = useDispatch();
-  const [postId, setPostId] = useState(0);
+  const [postId, setPostId] = useState("");
   const onChangeUserId = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const userIdFromInput = e.target.value ? Number(e.target.value) : 0;
     console.log("userId", userIdFromInput);
-    setUserId(userIdFromInput);
+    setUserId(e.target.value);
 
     const usersResponse = await fetch(
       "https://jsonplaceholder.typicode.com/users"
@@ -39,9 +39,9 @@ function App() {
   };
 
   const onChangePostId = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPostId(e.target.value);
     if (e.target.value) {
       const postIdFromInput = Number(e.target.value);
-      setPostId(postIdFromInput);
 
       const psotResponse = await fetch(
         "https://jsonplaceholder.typicode.com/posts/" + postIdFromInput
