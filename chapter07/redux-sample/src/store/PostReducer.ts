@@ -8,13 +8,14 @@ export interface Post {
 
 export interface PostAction {
     type: string;
-    playload: Post | null;
+    payload: Post | null;
 }
 
 export const PostReducer = (state: Post | null = null, action: PostAction): Post | null => {
     switch (action.type) {
         case POST_TYPE:
-            return action.playload;
+            console.log("payload", action.payload);
+            return action.payload;
         default:
             return state;
     }
