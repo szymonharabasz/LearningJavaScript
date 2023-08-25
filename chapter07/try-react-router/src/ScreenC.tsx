@@ -9,15 +9,16 @@ interface ScerenProps {
 const ScreenC: FC<ScerenProps> = (props) => {
     const { userid } = useParams();
     const navigate = useNavigate();
-    useEffect(() => {
-        setTimeout(() => {
-            navigate("/");
-        }, 3000);
-    });
+    const onClickGoBack = () => {
+        navigate(-1);
+    };
     return (
         <div>
             <div>{"Twój identyfikator to: " + userid}</div>
-            <div>{props.message}</div>;
+            <div>{props.message}</div>
+            <div>
+                <button onClick={onClickGoBack}>Wróć na poprzednią stronę</button>
+            </div>
         </div>
     );
 };
